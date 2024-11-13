@@ -55,10 +55,10 @@ export const sendToGoogleSheets = async (data) => {
       body: JSON.stringify(formattedData)
     });
 
-    console.log('Response status:', response.status);
-    console.log('Response received');
-    
-    return true;
+    const result = await response.json(); // Получаем JSON ответ
+    console.log('Response received:', result);
+
+    return result; // Возвращаем объект с success
   } catch (error) {
     console.error('Error saving to sheet:', error);
     return false;
