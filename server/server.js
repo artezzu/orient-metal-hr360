@@ -25,8 +25,8 @@ console.log('Build path:', buildPath);
 app.use(express.static(buildPath));
 
 // Обновляем конфигурацию Google Sheets с правильным ID и названием листа
-const SPREADSHEET_ID = '17flBIFaRCISvvLmrhgGt9I0sO9591pGfYG08bujqQ-s';
-const SHEET_NAME = 'Лист1'; // Изменено на правильное название листа
+const SPREADSHEET_ID = '1z5jcNcq84jxdoRMsX54rV3e6hXKRRFJwUpR28ePFmh4';
+const SHEET_NAME = 'UserData';
 
 const credentialsPath = process.env.GOOGLE_APPLICATION_CREDENTIALS || path.join(__dirname, 'credentials.json');
 console.log('Credentials path:', credentialsPath);
