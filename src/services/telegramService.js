@@ -56,29 +56,25 @@ const calculateResults = (answers) => {
 
 export const sendToTelegram = async (data) => {
   try {
-    console.log('Generating PDF for Telegram...');
-
+    console.log('Starting PDF generation for Telegram...');
     const pdfDoc = await generatePDF(data);
     const pdfBlob = new Blob([pdfDoc], { type: 'application/pdf' });
     
     const formData = new FormData();
-    formData.append('document', pdfBlob, 'survey_results.pdf');
     formData.append('chat_id', TELEGRAM_CHAT_ID);
+    formData.append('document', pdfBlob, 'survey_results.pdf');
     
     console.log('Sending to Telegram...');
-
     const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendDocument`, {
       method: 'POST',
       body: formData
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to send PDF to Telegram: ${response.status}`);
+      throw new Error(`Telegram API error: ${response.status}`);
     }
 
-    const result = await response.json();
-    console.log('Telegram response:', result);
-
+    console.log('Successfully sent to Telegram');
     return true;
   } catch (error) {
     console.error('Error sending to Telegram:', error);

@@ -116,6 +116,8 @@ const ThankYou = () => {
         const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
         const surveyData = JSON.parse(localStorage.getItem('surveyAnswers') || '{}');
 
+        console.log('Sending data:', { userInfo, surveyData });
+
         if (Object.keys(userInfo).length && Object.keys(surveyData).length) {
           const response = await sendToGoogleSheets({ 
             userInfo, 
@@ -123,39 +125,29 @@ const ThankYou = () => {
             requestId: requestIdRef.current
           });
           
-          if (response.success && !response.duplicate) {
-            await sendToTelegram({
-              userInfo,
-              surveyAnswers: surveyData
-            });
-            
-            localStorage.removeItem('surveyAnswers');
-            localStorage.removeItem('userInfo');
-            setShowCheckmark(true);
-            
-            setTimeout(() => {
-              navigate('/');
-            }, 5000);
-          }
+          setShowCheckmark(true);
+          
+          sendToTelegram({
+            userInfo,
+            surveyAnswers: surveyData
+          }).catch(console.error);
+          
+          localStorage.removeItem('surveyAnswers');
+          localStorage.removeItem('userInfo');
+          
+          setTimeout(() => {
+            navigate('/');
+          }, 3000);
         }
       } catch (error) {
         console.error('Error:', error);
-        alert(language === 'ru' ? 
-          'Произошла ошибка при сохранении данных. Попробуйте еще раз.' :
-          'Ma\'lumotlarni saqlashda xatolik yuz berdi. Qaytadan urinib ko\'ring.'
-        );
-        navigate('/survey');
       } finally {
         setIsSending(false);
       }
     };
 
     sendData();
-
-    return () => {
-      hasAttemptedRef.current = true;
-    };
-  }, [language, navigate]);
+  }, [navigate]);
 
   const translations = {
     ru: {
