@@ -9,7 +9,7 @@ const fs = require('fs');
 const app = express();
 
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://orienthr360.serveo.net'],
+  origin: ['http://localhost:3000', 'https://orient-metal-hr360.onrender.com'],
   credentials: true
 }));
 app.use(express.json());
@@ -25,7 +25,7 @@ console.log('Build path:', buildPath);
 app.use(express.static(buildPath));
 
 // Обновляем конфигурацию Google Sheets с правильным ID и названием листа
-const SPREADSHEET_ID = '1z5jcNcq84jxdoRMsX54rV3e6hXKRRFJwUpR28ePFmh4';
+const SPREADSHEET_ID = '17flBIFaRCISvvLmrhgGt9I0sO9591pGfYG08bujqQ-s';
 const SHEET_NAME = 'Лист1'; // Изменено на правильное название листа
 
 const credentialsPath = process.env.GOOGLE_APPLICATION_CREDENTIALS || path.join(__dirname, 'credentials.json');
@@ -73,7 +73,7 @@ app.post('/api/save-results', async (req, res) => {
     const authClient = await auth.getClient();
     const sheets = google.sheets({ version: 'v4', auth: authClient });
 
-    // Создаем метку времени в н��жном формате
+    // Создаем метку времени в нжном формате
     const now = new Date();
     // Устанавливаем часовой пояс Узбекистана (UTC+5)
     const uzDate = new Date(now.getTime() + (5 * 60 * 60 * 1000));

@@ -1,7 +1,7 @@
 // Обновляем базовый URL API
 const API_BASE_URL = process.env.NODE_ENV === 'development' 
   ? 'http://localhost:3001'
-  : 'https://orienthr360.serveo.net';
+  : 'https://orient-metal-hr360.onrender.com';
 
 export const sendToGoogleSheets = async (data) => {
   try {
