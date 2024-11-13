@@ -132,6 +132,22 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(buildPath, 'index.html'));
 });
 
+// Добавляем эндпоинт для пинга
+app.get('/ping', (req, res) => {
+  res.send('pong');
+});
+
+// Функция самопинга
+const keepAlive = () => {
+  setInterval(() => {
+    fetch('https://orient-metal-hr360.onrender.com/ping')
+      .then(() => console.log('Server pinged:', new Date().toISOString()))
+      .catch(err => console.error('Ping failed:', err));
+  }, 5 * 60 * 1000); // Пингуем каждые 5 минут
+};
+
+// Запускаем сервер и включаем самопинг
 app.listen(process.env.PORT || 3001, () => {
   console.log(`Server running on port ${process.env.PORT || 3001}`);
+  keepAlive(); // Запускаем функцию самопинга
 }); 
