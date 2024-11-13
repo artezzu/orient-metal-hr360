@@ -132,17 +132,6 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(buildPath, 'index.html'));
 });
 
-if (process.env.NODE_ENV === 'production') {
-  const httpsOptions = {
-    key: fs.readFileSync('path/to/key.pem'),
-    cert: fs.readFileSync('path/to/cert.pem')
-  };
-
-  https.createServer(httpsOptions, app).listen(443, () => {
-    console.log('HTTPS Server running on port 443');
-  });
-} else {
-  app.listen(process.env.PORT || 3001, () => {
-    console.log(`Server running on port ${process.env.PORT || 3001}`);
-  });
-} 
+app.listen(process.env.PORT || 3001, () => {
+  console.log(`Server running on port ${process.env.PORT || 3001}`);
+}); 
